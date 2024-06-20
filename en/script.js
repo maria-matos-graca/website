@@ -5,7 +5,6 @@ window.loadContent = function(pageName) {
         .then(data => {
             document.getElementById('content').innerHTML = data;
 
-            updateLanguageDisplay();
         })
         .catch(error => console.error('Error loading the page: ', error));
 };
