@@ -1,0 +1,269 @@
+
+html, body {
+  margin: 0;
+  padding: 0%;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  color: black;
+  background:black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+h2{
+  color:black;
+}
+
+#toggleButton {
+  text-decoration: none;
+  height: 100px;
+  width: 100px;
+  color: black;
+  background-color: white;
+  opacity:50%;
+  margin-bottom: 4px;
+  border: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 1000;
+}
+
+#toggleButton:hover {
+  background-color: grey;
+  color: white;
+}
+
+
+
+.typing{
+  display:inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 2px; 
+   animation:
+    
+    typing 5s steps(30, end),
+    blink-caret 0.5s step-end;
+}
+.cursor{
+  position:absolute;
+  display:inline-block;
+  font-size:40px;
+  animation: blink 1s steps(1, end) infinite; 
+  animation-delay:5s;
+
+}
+
+@keyframes typing{
+  from { width: 0 }
+  to { width: 100% }
+}
+
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+h1{
+color:white;
+}
+p{
+color:grey;
+}
+
+#full{
+  position:absolute;
+  width: 100%;
+height: 100%;
+background:rgb(20, 21, 20);
+}
+
+#head{
+padding-top: 1%;
+position:relative;
+display: flex;
+justify-content: left;
+align-items: left;
+width: 100%;
+height: 20%;
+background: black;
+opacity:100%;
+z-index:1;
+color: white;
+font-size:20px;
+
+}
+
+#headfield{
+  padding:10px;
+
+}
+
+#trunk{
+position:relative;
+display:flex;
+justify-content:middle;
+width: 100%;
+display:flex;
+height: 80%;
+background:black;
+}
+#tail{
+  position:relative;
+  width: 100%;
+height: 20%;
+}
+.col{
+  width:100%;
+  height:100%;
+  flex: 1;
+}
+
+subcol{
+  display:block;
+}
+
+#col1{
+  background:black;
+  display:flex;
+  flex: 0.3
+}
+#col2{
+  display:flex;
+}
+
+#menu {
+  display: block;
+  width:90%;
+  margin:auto;
+}
+
+.navbar-menu-link{
+  
+  display: block;
+  padding: 8px 12px;
+  font-size:30px;
+  text-decoration: none;
+  color:white;
+  background-color: grey;
+  margin-bottom: 4px;
+  transition: background-color 0.3s ease;
+}
+.navbar-menu-link:hover {
+  background-color: black;
+}
+
+#gear{
+  width:200px;
+  height:200px;
+  display:flex;
+}
+
+#h1{
+vertical-align: middle;
+align-self:left;
+align-items: left;
+
+}
+
+
+
+
+
+#content{
+  padding: 10%;
+  color:black;
+  background:white;
+  margin-top:70px;
+  position:relative;
+  height:60%;
+  width:70%;
+  opacity:100%;
+  z-index:0;
+  overflow-x: auto; 
+  overflow-y: auto;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+
+
+.photo {
+  background-color: white;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+
+.photo {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  position: absolute;
+  bottom: 0;
+}
+
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */ 
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: black;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: black;
+}
+
+/* Add a background color and some padding around the form */
+.container2 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
