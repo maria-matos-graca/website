@@ -136,15 +136,18 @@ subcol{
 }
 
 #col1{
+  height:100%;
   background:black;
   display:flex;
   flex: 0.3
 }
 #col2{
+  height:100%;
   display:flex;
 }
 
 #menu {
+  height:100%;
   display: block;
   padding-left:5%;
   width:80%;
@@ -172,16 +175,10 @@ subcol{
   display:flex;
 }
 
-
-
-
-
-
 #content{
   padding: 10%;
   color:black;
   background:white;
-  margin-top:70px;
   position:relative;
   height:60%;
   width:70%;
