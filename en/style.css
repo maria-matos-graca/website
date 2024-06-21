@@ -136,6 +136,7 @@ subcol{
 }
 
 #col1{
+  height:100%;
   background:black;
   display:flex;
   flex: 0.3
@@ -145,6 +146,7 @@ subcol{
 }
 
 #menu {
+  height:100%;
   display: block;
   padding-left:5%;
   width:80%;
