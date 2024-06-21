@@ -147,6 +147,7 @@ subcol{
 
 #menu {
   display: block;
+  padding-left:10%;
   width:90%;
   margin:auto;
 }
