@@ -77,7 +77,7 @@ h2{
 }
 h1{
 color:white;
-/*padding-left: 8%;*/
+padding-left: 8%;
 }
 p{
 color:grey;
@@ -146,7 +146,7 @@ subcol{
 
 #menu {
   display: block;
-  padding-left:8%;
+  padding-left:5%;
   width:80%;
   margin:auto;
 }
