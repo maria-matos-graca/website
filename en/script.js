@@ -26,7 +26,7 @@ function loadStylesheet(url) {
 // Load the default content when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadScript('script.js');
-    loadStylesheet('styles.css');
+    loadStylesheet('style.css');
     loadContent('about.html');
 });
 

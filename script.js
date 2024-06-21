@@ -1,14 +1,15 @@
 
-  window.loadContent = function(pageName) {
-      fetch(pageName)
-          .then(response => response.text())
-          .then(data => {
-              document.getElementById('content').innerHTML = data;
+window.loadContent = function(pageName) {
+    fetch(pageName)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('content').innerHTML = data;
 
-          })
-          .catch(error => console.error('Error loading the page: ', error));
-  };
-  function loadScript(url) {
+        })
+        .catch(error => console.error('Error loading the page: ', error));
+};
+
+function loadScript(url) {
     var script = document.createElement('script');
     script.src = url + '?v=' + new Date().getTime();
     document.head.appendChild(script);
@@ -25,6 +26,7 @@ function loadStylesheet(url) {
 // Load the default content when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadScript('script.js');
-    loadStylesheet('styles.css');
+    loadStylesheet('style.css');
     loadContent('about.html');
 });
+
