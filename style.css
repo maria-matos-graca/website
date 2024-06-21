@@ -79,6 +79,7 @@ h2{
 h1{
 color:white;
 padding-left: 10%;
+width:100%;
 }
 p{
 color:grey;
@@ -173,12 +174,6 @@ subcol{
   display:flex;
 }
 
-#h1{
-vertical-align: middle;
-align-self:left;
-align-items: left;
-
-}
 
 
 
