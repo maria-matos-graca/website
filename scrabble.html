@@ -41,7 +41,7 @@ function displayScore(word) {
 
 async function checkWordLanguages(word) {
     const normalizedWord = word.toLowerCase(); // Normalizar para minúsculas
-    const url = `https://en.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
+    const url = `https://fr.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
         normalizedWord
     )}&prop=extracts&explaintext=true&format=json&origin=*`;
 
