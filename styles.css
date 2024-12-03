@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Azul claro */
+    color: #00274d; /* Azul escuro */
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #004080; /* Azul forte */
+}
+
+form {
+    margin-top:100px;
+    margin-left: 300px;
+    text-align: left;
+}
+
+label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #004080;
+    border-radius: 4px;
+    width: 300px;
+}
+
+/* Estilos para o botão */
+button {
+    font-size: 16px;
+    padding: 10px 20px;
+    color: #ffffff; /* Texto branco */
+    background-color: #004080; /* Azul forte */
+    border: 1px solid #003060; /* Azul escuro */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #00509e; /* Azul mais claro */
+}
+
+button:active {
+    background-color: #003060; /* Azul escuro */
+    transform: scale(0.98); /* Efeito de clique */
+}
+
+div {
+    margin-top: 20px;
+    text-align: center;
+}
+
+h3 {
+    color: #00509e; /* Azul médio */
+}
+
+#solution {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #003060; /* Azul escuro */
+}
+
+#rivn {
+    font-size: 20px;
+    color: #004080;
+    font-weight: bold;
+    margin-top: 10px;
+}
