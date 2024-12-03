@@ -7,16 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script>
 
-function normalizeDictionary(dictionary) {
-    return dictionary.map(word =>
-        word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-    );
-}
 
-const dictionaries = {};
-for (const [language, words] of Object.entries(rawDictionaries)) {
-    dictionaries[language] = normalizeDictionary(words);
-}
 const scores = {
     A: 1, B: 3, C: 3, Ç: 5, D: 2, E: 1, F: 4, G: 2,
     H: 4, I: 1, J: 8, K: 10, L: 1, M: 3, N: 1, Ñ: 8,
