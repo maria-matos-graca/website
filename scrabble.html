@@ -16,15 +16,16 @@ const scores = {
 };
 
 function calculateScore(word) {
-    const normalizedWord = word.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Normalizar e remover acentos
+    const normalizedWord = word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     let score = 0;
 
     for (const letter of normalizedWord) {
-        score += scores[letter] || 0; // Somar pontuação da letra, ou 0 se não for válida
+        score += scores[letter.toUpperCase()] || 0;
     }
 
     return score;
 }
+
 
 function displayScore(word) {
     if (!word.trim()) {
@@ -39,8 +40,9 @@ function displayScore(word) {
 
 
 async function checkWordLanguages(word) {
-    const url = `https://fr.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
-        word
+    const normalizedWord = word.toLowerCase(); // Normalizar para minúsculas
+    const url = `https://en.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
+        normalizedWord
     )}&prop=extracts&explaintext=true&format=json&origin=*`;
 
     try {
@@ -56,6 +58,7 @@ async function checkWordLanguages(word) {
                 return;
             }
 
+            // Buscar todas as línguas no texto
             const extract = page.extract || "";
             const languageMatches = extract.match(/^==\s*([^\=]+)\s*==$/gm) || [];
             const languages = languageMatches.map(match =>
@@ -78,6 +81,7 @@ async function checkWordLanguages(word) {
             `Erro ao consultar o Wiktionnaire: ${error.message}`;
     }
 }
+
 
 
     </script>
