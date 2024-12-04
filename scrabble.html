@@ -97,9 +97,9 @@ async function checkWordLanguages(word) {
                 return;
             }
 
-            // Buscar todas as línguas no texto
+            // Buscar todas as línguas no texto usando regex mais permissiva
             const extract = page.extract || "";
-            const languageMatches = extract.match(/^==\s*([^\=]+)\s*==$/gm) || [];
+            const languageMatches = extract.match(/^==\s*([A-Za-zÀ-ÿ\s\-]+)\s*==$/gm) || [];
             const languages = languageMatches.map(match =>
                 match.replace(/^==\s*|\s*==$/g, "").trim()
             );
@@ -128,7 +128,6 @@ async function checkWordLanguages(word) {
             `Erro ao consultar o Wiktionnaire: ${error.message}`;
     }
 }
-
 
     </script>
 </head>
