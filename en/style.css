@@ -127,22 +127,6 @@ p {
   gap: 10px;
 }
 
-.navbar-menu-link {
-  text-decoration: none;
-  color: #F4F4F9; /* Branco acinzentado */
-  background: #6C91BF; /* Azul suave */
-  padding: 10px 15px;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 1.2rem;
-  transition: background-color 0.3s;
-}
-
-.navbar-menu-link:hover {
-  background: #FFB74D; /* Laranja quente */
-  color: #1C1C28; /* Texto escuro */
-}
-
 #content {
   padding: 20px;
 
@@ -248,4 +232,46 @@ p {
   #contact-form button {
     font-size: 1rem;
   }
+}
+
+
+/* Estilo base dos botões */
+.navbar-menu-link {
+  padding: 10px 20px;
+  margin: 5px;
+  border: 2px solid #6C91BF; /* Azul suave */
+  border-radius: 4px;
+  background: #F4F4F9; /* Fundo claro */
+  color: #1C1C28; /* Texto escuro */
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative; /* Necessário para posicionar a seta */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse */
+.navbar-menu-link:hover {
+  background: #FFB74D; /* Laranja quente */
+  color: white;
+}
+
+/* Estilo do botão "aceso" (último clicado) */
+.navbar-menu-link.selected {
+  background: #6C91BF; /* Azul suave */
+  color: white;
+  border-color: #FFB74D; /* Destaque */
+}
+
+/* Seta triangular */
+.navbar-menu-link.selected::after {
+  content: "";
+  position: absolute;
+  right: -20px; /* Posição relativa ao botão */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid #FFB74D; /* Laranja quente */
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
