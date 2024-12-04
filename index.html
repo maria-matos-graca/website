@@ -1,46 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-<HTML>
-   <HEAD>
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
     <meta charset="utf-8">
-      <TITLE>Maria Matos Graça</TITLE>
-      <LINK rel="stylesheet" type="text/css" href="style.css?v=1.0">
-        <script src="script.js"></script>
-   </HEAD>
-   <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Matos Graça</title>
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.0">
+    <script src="script.js" defer></script>
+</head>
+<body>
 
 <div id="full">
- <div id="head">
-
-  <div id="headfield">
-    <a href="/en/index.html"><button id="toggleButton">English</button></a>
-  <h1><div class="typing">Maria.Matos.Graça
-</div><div class="cursor">|</div></h1>
-</div>
- </div>
- <div id="trunk">
-
-   <div id="col1" class="col">
-
-    <nav id="menu" class="navbar-menu">
-        <a href="#" class="navbar-menu-link" onclick="loadContent('about.html')">Sobre</a>
-        <a href="#" class="navbar-menu-link" onclick="loadContent('bio.html')">Bio</a>
-        <a href="#" class="navbar-menu-link" onclick="loadContent('skills&work.html')">Trabalho</a>
-        <a href="#" class="navbar-menu-link" onclick="loadContent('contact&links.html')">Contacto</a>
-      
+    <div id="head">
+        <div id="headfield">
+            <a href="../index.html">
+                <button id="toggleButton" aria-label="Trocar para Inglês">English</button>
+            </a>
+            <h1>
+                <div class="typing">Maria.Matos.Graça</div>
+                <div class="cursor">|</div>
+            </h1>
+        </div>
     </div>
-      
-   <div id="col2" class="col">
-
-    <div id="content"></div>
-
-   </div>
-
- </div>
-
-
- <div id="tail"></div>
 </div>
+    <div id="trunk">
+        <div id="col1" class="col">
+            <nav id="menu" class="navbar-menu">
+                <a href="#" class="navbar-menu-link" onclick="loadContent('about.html')">Sobre</a>
+                <a href="#" class="navbar-menu-link" onclick="loadContent('bio.html')">Bio</a>
+                <a href="#" class="navbar-menu-link" onclick="loadContent('skills&work.html')">Trabalho</a>
+                <a href="#" class="navbar-menu-link" onclick="loadContent('contact&links.html')">Contactos</a>
+            </nav>
+        </div>
+        <div id="col2" class="col">
+            <div id="content"></div>
+        </div>
+    </div>
+</div>
+
 </body>
-</HTML>
-</header>
+</html>

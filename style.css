@@ -1,12 +1,10 @@
-
 html, body {
   margin: 0;
-  padding: 0%;
+  padding: 0;
   height: 100%;
   width: 100%;
-  margin: 0;
-  color: black;
-  background:black;
+  color: white;
+  background: black;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -14,199 +12,152 @@ html, body {
   display: none;
 }
 
-h2{
-  color:black;
+h1 {
+  display:flex;
+  color: white;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+p {
+  color: grey;
 }
 
 #toggleButton {
   text-decoration: none;
   height: 50px;
-  width: 100px;
+  width: 120px;
   color: white;
-  background:black;
-  margin-bottom: 4px;
-  border: none;
+  background: black;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 4px;
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 10px;
+  right: 10px;
   z-index: 1000;
+  cursor: pointer;
 }
 
 #toggleButton:hover {
   color: lightgrey;
 }
 
-.typing{
-  display:inline-block;
+.typing {
+  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   letter-spacing: 2px; 
-   animation:
-    
-    typing 5s steps(30, end),
-    blink-caret 0.5s step-end;
-}
-.cursor{
-  display:inline;
-  animation: blink 1s steps(1, end) infinite; 
-  animation-delay:5s;
-
+  animation: typing 5s steps(30, end);
 }
 
-@keyframes typing{
-  from { width: 0 }
-  to { width: 100% }
+.cursor {
+  display: inline-block;
+  animation: blink 1s steps(1, end) infinite;
+  animation-delay: 5s; /* Atraso de 5 segundos para começar a piscar */
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-h1{
-display:flex;
-color:white;
-font-size:40px;
-}
-p{
-color:grey;
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-#full{
-  position:absolute;
-  width: 100%;
-height: 100%;
-background:rgb(20, 21, 20);
+#full {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-#head{
-padding-top: 1%;
-position:relative;
-display: flex;
-justify-content: left;
-align-items: left;
-width: 100%;
-height: 20%;
-background: black;
-opacity:100%;
-z-index:1;
-color: white;
-font-size:20px;
-
+#head {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: black;
+  border-bottom: 1px solid grey;
 }
 
-#headfield{
-  padding:10px;
-
-}
-
-#trunk{
-position:relative;
-display:flex;
-justify-content:middle;
-width: 100%;
-display:flex;
-height: 80%;
-background:black;
-}
-#tail{
-  position:relative;
-  width: 100%;
-height: 20%;
-}
-.col{
-  width:100%;
-  height:100%;
+#trunk {
+  display: flex;
   flex: 1;
+  overflow: hidden;
 }
 
-subcol{
-  display:block;
+#col1 {
+  background: #202020;
+  flex: 0.3;
+  padding: 20px;
 }
 
-#col1{
-  background:black;
-  display:flex;
-  flex: 0.3
+#col2 {
+  display: flex;
+  flex-direction: column; /* Permite organização do conteúdo em bloco */
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: white;
+  color: black;
+  flex: 0.7;
+  padding: 20px;
+  overflow-y: auto; /* Permite rolar se o conteúdo for maior que o espaço */
+  border-left: 1px solid grey; /* Estilo para diferenciar as colunas */
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-#col2{
-  display:flex;
+
+#col2 h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333; /* Título para o conteúdo carregado */
 }
+
+#col2 p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
 
 #menu {
-  display: block;
-  width:90%;
-  margin:auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.navbar-menu-link{
-  
-  display: block;
-  padding: 8px 12px;
-  font-size:30px;
+.navbar-menu-link {
   text-decoration: none;
-  color:white;
-  background-color: grey;
-  margin-bottom: 4px;
-  transition: background-color 0.3s ease;
-}
-.navbar-menu-link:hover {
-  background-color: black;
-}
-
-#h1{
-vertical-align: middle;
-align-self:left;
-align-items: left;
-
-}
-
-#content{
-  padding: 10%;
-  color:black;
-  background:white;
-  margin-top:70px;
-  position:relative;
-  height:60%;
-  width:70%;
-  opacity:100%;
-  z-index:0;
-  overflow-x: auto; 
-  overflow-y: auto;
-}
-
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px;
-  box-sizing: border-box; 
-  margin-top: 6px;
-  margin-bottom: 16px; 
-  resize: vertical;
-}
-
-input[type=submit] {
-  background-color: black;
   color: white;
-  padding: 12px 20px;
-  border: none;
+  background: grey;
+  padding: 10px 15px;
   border-radius: 4px;
-  cursor: pointer;
+  text-align: center;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
 }
 
-input[type=submit]:hover {
-  background-color: black;
+.navbar-menu-link:hover {
+  background: #444;
 }
 
-.container2 {
-  border-radius: 5px;
-  background-color: #f2f2f2;
+#content {
   padding: 20px;
+}
+
+@media (max-width: 768px) {
+  #trunk {
+      flex-direction: column;
+  }
+  #col1, #col2 {
+      flex: 1;
+      padding: 10px;
+  }
+  .navbar-menu-link {
+      font-size: 1rem;
+  }
+  h1 {
+      font-size: 1.5rem;
+  }
 }
