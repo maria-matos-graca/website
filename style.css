@@ -126,6 +126,23 @@ p {
   flex-direction: column;
   gap: 10px;
 }
+
+.navbar-menu-link {
+  text-decoration: none;
+  color: #F4F4F9; /* Branco acinzentado */
+  background: #6C91BF; /* Azul suave */
+  padding: 10px 15px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+}
+
+.navbar-menu-link:hover {
+  background: #FFB74D; /* Laranja quente */
+  color: #1C1C28; /* Texto escuro */
+}
+
 #content {
   padding: 20px;
 
@@ -231,28 +248,4 @@ p {
   #contact-form button {
     font-size: 1rem;
   }
-}
-.navbar-menu-link {
-  padding: 10px 20px;
-  margin: 5px;
-  border: 2px solid #6C91BF; /* Azul suave */
-  border-radius: 4px;
-  background: #F4F4F9; /* Fundo claro */
-  color: #1C1C28; /* Texto escuro */
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Estilo padrão ao passar o mouse */
-.navbar-menu-link:hover {
-  background: #FFB74D; /* Laranja quente */
-  color: white;
-}
-
-/* Estilo do botão "aceso" (selecionado) */
-.navbar-menu-link.selected {
-  background: #6C91BF; /* Azul suave */
-  color: white;
-  border-color: #FFB74D; /* Destaque ao redor */
 }
