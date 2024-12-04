@@ -140,12 +140,21 @@ async function checkWordLanguages(word) {
     <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
         Identificar Línguas Românicas
     </button>
+    <button type="button" onclick="displayScore(document.getElementById('word').value)">
+        Calcular Pontuação
+    </button>
 </form>
 
 <div>
     <h3>Resultado da Validação:</h3>
     <div id="validationResult"></div>
 </div>
+
+<div>
+    <h3>Pontuação da Palavra:</h3>
+    <div id="scoreResult"></div>
+</div>
+
 
 
     
