@@ -27,6 +27,26 @@ const romanLanguages = [
     "Corse",
     "Mirandais"
 ];
+const languageMapping = {
+    "Portugais": "Português",
+    "Espagnol": "Espanhol",
+    "Français": "Francês",
+    "Italien": "Italiano",
+    "Roumain": "Romeno",
+    "Catalan": "Catalão",
+    "Occitan": "Occitano",
+    "Galicien": "Galego",
+    "Sarde": "Sardo",
+    "Ladin": "Ladino",
+    "Frioulan": "Friulano",
+    "Réto-roman": "Reto-romano",
+    "Asturien": "Asturiano",
+    "Aragonais": "Aragonês",
+    "Napolitain": "Napolitano",
+    "Sicilien": "Siciliano",
+    "Corse": "Córsico",
+    "Mirandais": "Mirandês"
+};
 
 const scores = {
     A: 1, B: 3, C: 3, Ç: 5, D: 2, E: 1, F: 4, G: 2,
@@ -58,10 +78,9 @@ function displayScore(word) {
         `A pontuação da palavra "${word}" é: ${score}.`;
 }
 
-
 async function checkWordLanguages(word) {
     const normalizedWord = word.toLowerCase(); // Normalizar a palavra
-    const url = `https://fr.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
+    const url = `https://en.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
         normalizedWord
     )}&prop=extracts&explaintext=true&format=json&origin=*`;
 
@@ -73,7 +92,7 @@ async function checkWordLanguages(word) {
             const page = Object.values(pages)[0];
 
             if (!page || page.missing) {
-                document.getElementById("validationResult").textContent =
+                document.getElementById("validationResult").innerHTML =
                     `A palavra "${word}" não foi encontrada no Wiktionnaire.`;
                 return;
             }
@@ -87,34 +106,34 @@ async function checkWordLanguages(word) {
 
             // Filtrar as línguas românicas
             const romanLanguagesPresent = languages.filter(lang =>
-                romanLanguages.includes(lang)
+                Object.keys(languageMapping).includes(lang)
             );
 
             if (romanLanguagesPresent.length > 0) {
-                document.getElementById("validationResult").textContent =
-                    `A palavra "${word}" foi encontrada nas seguintes línguas românicas: ${romanLanguagesPresent.join(", ")}.`;
+                const translatedLanguages = romanLanguagesPresent.map(lang => languageMapping[lang]);
+                const languageList = translatedLanguages.map(lang => `<li>${lang};</li>`).join("");
+
+                document.getElementById("validationResult").innerHTML =
+                    `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
             } else {
-                document.getElementById("validationResult").textContent =
+                document.getElementById("validationResult").innerHTML =
                     `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
             }
         } else {
-            document.getElementById("validationResult").textContent =
+            document.getElementById("validationResult").innerHTML =
                 `Erro ao consultar o Wiktionnaire: ${response.statusText}`;
         }
     } catch (error) {
-        document.getElementById("validationResult").textContent =
+        document.getElementById("validationResult").innerHTML =
             `Erro ao consultar o Wiktionnaire: ${error.message}`;
     }
 }
-
-
 
 
     </script>
 </head>
 <body>
     <h1>Scrabble Românico</h1>
-
 
 <form onsubmit="return false;">
     <label for="word">Digite uma palavra:</label>
@@ -128,6 +147,7 @@ async function checkWordLanguages(word) {
     <h3>Resultado da Validação:</h3>
     <div id="validationResult"></div>
 </div>
+
 
     
     <div>
