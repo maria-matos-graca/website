@@ -81,6 +81,7 @@ p {
   align-items: center;
   background: #2E3A59; /* Azul profundo */
   border-bottom: 2px solid white; /* Azul suave */
+  flex-shrink:0;
 }
 
 #trunk {
@@ -149,6 +150,7 @@ p {
 
 @media (max-width: 768px) {
   #trunk {
+      flex: 1;
       flex-direction: column;
   }
   #col1, #col2 {
