@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="styles.css">
     <script>
 
+const romanLanguages = [
+    "Portugais",
+    "Espagnol",
+    "Français",
+    "Italien",
+    "Roumain",
+    "Catalan",
+    "Occitan",
+    "Galicien",
+    "Sarde",
+    "Ladin",
+    "Frioulan",
+    "Réto-roman",
+    "Asturien",
+    "Aragonais",
+    "Napolitain",
+    "Sicilien",
+    "Corse",
+    "Mirandais"
+];
 
 const scores = {
     A: 1, B: 3, C: 3, Ç: 5, D: 2, E: 1, F: 4, G: 2,
@@ -40,7 +60,7 @@ function displayScore(word) {
 
 
 async function checkWordLanguages(word) {
-    const normalizedWord = word.toLowerCase(); // Normalizar para minúsculas
+    const normalizedWord = word.toLowerCase(); // Normalizar a palavra
     const url = `https://fr.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
         normalizedWord
     )}&prop=extracts&explaintext=true&format=json&origin=*`;
@@ -65,12 +85,17 @@ async function checkWordLanguages(word) {
                 match.replace(/^==\s*|\s*==$/g, "").trim()
             );
 
-            if (languages.length > 0) {
+            // Filtrar as línguas românicas
+            const romanLanguagesPresent = languages.filter(lang =>
+                romanLanguages.includes(lang)
+            );
+
+            if (romanLanguagesPresent.length > 0) {
                 document.getElementById("validationResult").textContent =
-                    `A palavra "${word}" foi encontrada nas seguintes línguas: ${languages.join(", ")}.`;
+                    `A palavra "${word}" foi encontrada nas seguintes línguas românicas: ${romanLanguagesPresent.join(", ")}.`;
             } else {
                 document.getElementById("validationResult").textContent =
-                    `Não foi possível identificar as línguas para a palavra "${word}".`;
+                    `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
             }
         } else {
             document.getElementById("validationResult").textContent =
@@ -84,27 +109,26 @@ async function checkWordLanguages(word) {
 
 
 
+
     </script>
 </head>
 <body>
     <h1>Scrabble Românico</h1>
 
 
-    <form onsubmit="return false;">
-        <label for="word">Digite uma palavra:</label>
-        <input type="text" id="word" name="letters">
-        <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
-            Identificar Línguas
-        </button>
-        <button type="button" onclick="displayScore(document.getElementById('word').value)">
-            Calcular Pontuação
-        </button>
-    </form>
-    
-    <div>
-        <h3>Resultado da Validação:</h3>
-        <div id="validationResult"></div>
-    </div>
+<form onsubmit="return false;">
+    <label for="word">Digite uma palavra:</label>
+    <input type="text" id="word" name="letters">
+    <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
+        Identificar Línguas Românicas
+    </button>
+</form>
+
+<div>
+    <h3>Resultado da Validação:</h3>
+    <div id="validationResult"></div>
+</div>
+
     
     <div>
         <h3>Pontuação da Palavra:</h3>
