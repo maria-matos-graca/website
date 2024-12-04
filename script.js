@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadStylesheet('style.css');
     loadContent('about.html');
 });
+
 // Seleciona todos os botões
-const buttons = document.querySelectorAll('.select-button');
+const buttons = document.querySelectorAll('.navbar-menu-link');
 
 // Adiciona evento de clique em cada botão
 buttons.forEach(button => {
@@ -42,4 +43,5 @@ buttons.forEach(button => {
     button.classList.add('selected');
   });
 });
+
 
