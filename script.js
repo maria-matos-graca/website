@@ -30,3 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
     loadContent('about.html');
 });
 
+// Seleciona todos os botões
+const buttons = document.querySelectorAll('.navbar-menu-link');
+
+// Adiciona um evento de clique em cada botão
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove a classe "selected" de todos os botões
+    buttons.forEach(btn => btn.classList.remove('selected'));
+
+    // Adiciona a classe "selected" ao botão clicado
+    button.classList.add('selected');
+  });
+});
+
