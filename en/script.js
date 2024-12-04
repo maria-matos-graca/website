@@ -30,11 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadContent('about.html');
 });
 
-
 // Seleciona todos os botões
-const buttons = document.querySelectorAll('.navbar-menu-link');
+const buttons = document.querySelectorAll('.select-button');
 
-// Adiciona um evento de clique em cada botão
+// Adiciona evento de clique em cada botão
 buttons.forEach(button => {
   button.addEventListener('click', () => {
     // Remove a classe "selected" de todos os botões
@@ -44,4 +43,5 @@ buttons.forEach(button => {
     button.classList.add('selected');
   });
 });
+
 
