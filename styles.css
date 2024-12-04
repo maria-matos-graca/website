@@ -6,8 +6,9 @@ body {
     padding: 20px;
 }
 
-h1 {
-    text-align: center;
+h1 {    
+    margin-left: 300px;
+    text-align: left;
     color: #004080; /* Azul forte */
 }
 
@@ -34,21 +35,21 @@ input[type="text"] {
 button {
     font-size: 16px;
     padding: 10px 20px;
-    color: #ffffff; /* Texto branco */
-    background-color: #004080; /* Azul forte */
-    border: 1px solid #003060; /* Azul escuro */
+    color: #ffffff;
+    background-color: #004080;
+    border: 1px solid #003060;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #00509e; /* Azul mais claro */
+    background-color: #00509e;
 }
 
 button:active {
-    background-color: #003060; /* Azul escuro */
-    transform: scale(0.98); /* Efeito de clique */
+    background-color: #003060;
+    transform: scale(0.98);
 }
 
 div {
@@ -57,13 +58,13 @@ div {
 }
 
 h3 {
-    color: #00509e; /* Azul médio */
+    color: #00509e; 
 }
 
 #solution {
     margin-top: 10px;
     font-size: 18px;
-    color: #003060; /* Azul escuro */
+    color: #003060;
 }
 
 #rivn {
