@@ -47,7 +47,6 @@ h2{
     blink-caret 0.5s step-end;
 }
 .cursor{
-  position:absolute;
   display:inline-block;
   font-size:40px;
   animation: blink 1s steps(1, end) infinite; 
