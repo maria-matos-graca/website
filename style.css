@@ -92,7 +92,7 @@ p {
   display: flex;
   flex: 1;
   overflow: hidden;
-  height: 400px;
+  height: 90%;
   overflow-y: auto;
   background: #F4F4F9;
   color: #1C1C28;
