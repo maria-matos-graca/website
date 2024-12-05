@@ -1,6 +1,4 @@
 html, body {
-  margin: 0;
-  padding: 0;
   height: 100%;
   width: 100%;
   color: #F4F4F9; /* Branco acinzentado */
@@ -69,11 +67,14 @@ p {
 }
 
 #full {
+  width: 80%;
+  margin:auto;
   display: flex;
   flex-direction: column;
 }
 
 #head {
+  margin-top:100px;
   height: 100px;
   padding: 20px;
   display: flex;
@@ -85,6 +86,9 @@ p {
 }
 
 #trunk {
+  
+  width: 80%;
+  margin:auto;
   display: flex;
   flex: 1;
   overflow: hidden;
