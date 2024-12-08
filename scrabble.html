@@ -40,8 +40,13 @@ const romanLanguagesMapping = {
 
 
 async function checkWordLanguages(word) {
-    const normalizedWord = word.normalize("NFC"); // Normalizar para NFC
-    const encodedWord = encodeURIComponent(normalizedWord); // Codificar para URL
+    if (!word.trim()) {
+        document.getElementById("validationResult").innerHTML = "Por favor, insira uma palavra.";
+        return;
+    }
+
+    const normalizedWord = word.toLowerCase().normalize("NFC");
+    const encodedWord = encodeURIComponent(normalizedWord);
     const url = `https://en.wiktionary.org/w/api.php?action=query&titles=${encodedWord}&prop=extracts&explaintext=true&format=json&origin=*`;
 
     try {
