@@ -7,21 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <script>
 
-const wiktionaryDomains = {
-    pt: "pt.wiktionary.org",
-    it: "it.wiktionary.org",
-    fr: "fr.wiktionary.org",
-    es: "es.wiktionary.org",
-    ro: "ro.wiktionary.org"
-};
-const languageVariants = {
-    "pt": ["Portugais", "Português", "Portuguese", "Portoghese", "Portugheză"],
-    "it": ["Italien", "Italiano", "Italian", "Italienisch", "Italiană"],
-    "fr": ["Français", "Francês", "French", "Francese", "Franceză"],
-    "es": ["Espagnol", "Espanhol", "Spanish", "Spagnolo", "Spaniolă"],
-    "ro": ["Roumain", "Romeno", "Romanian", "Rumeno", "Română"]
-};
-
 function matchLanguage(langName) {
     for (const [langCode, variants] of Object.entries(languageVariants)) {
         if (variants.some(variant => variant.toLowerCase() === langName.toLowerCase())) {
@@ -30,47 +15,78 @@ function matchLanguage(langName) {
     }
     return null;
 }
+
+const romanLanguages = [
+    "Portuguese",
+    "Spanish",
+    "French",
+    "Italian",
+    "Romanian",
+    "Catalan",
+    "Occitan",
+    "Galician",
+    "Sardinian",
+    "Ladin",
+    "Friulian",
+    "Rhaeto-Romance",
+    "Asturian",
+    "Aragonese",
+    "Neapolitan",
+    "Sicilian",
+    "Corsican",
+    "Mirandese"
+];
+
 async function checkWordLanguages(word) {
     const normalizedWord = word.normalize("NFC"); // Normalizar para NFC
     const encodedWord = encodeURIComponent(normalizedWord); // Codificar para URL
-    const results = [];
+    const url = `https://en.wiktionary.org/w/api.php?action=query&titles=${encodedWord}&prop=extracts&explaintext=true&format=json&origin=*`;
 
-    for (const [lang, domain] of Object.entries(wiktionaryDomains)) {
-        const url = `https://${domain}/w/api.php?action=query&titles=${encodedWord}&prop=extracts&explaintext=true&format=json&origin=*`;
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            const pages = data.query.pages;
+            const page = Object.values(pages)[0];
 
-        try {
-            const response = await fetch(url);
-            if (response.ok) {
-                const data = await response.json();
-                const pages = data.query.pages;
-                const page = Object.values(pages)[0];
+            if (page && !page.missing) {
+                const extract = page.extract || "";
+                const languageMatches = extract.match(/^==\s*([^\=]+)\s*==$/gm) || [];
+                const languages = languageMatches.map(match =>
+                    match.replace(/^==\s*|\s*==$/g, "").trim()
+                );
 
-                if (page && !page.missing) {
-                    results.push(lang); // Adicionar o código da língua à lista de resultados
+                // Filtrar apenas línguas românicas
+                const romanLanguagesPresent = languages.filter(lang =>
+                    romanLanguages.includes(lang)
+                );
+
+                // Exibir resultado
+                if (romanLanguagesPresent.length > 0) {
+                    const languageList = romanLanguagesPresent
+                        .map(lang => `<li>${lang};</li>`)
+                        .join("");
+                    document.getElementById("validationResult").innerHTML =
+                        `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
+                } else {
+                    document.getElementById("validationResult").innerHTML =
+                        `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
                 }
+            } else {
+                document.getElementById("validationResult").innerHTML =
+                    `A palavra "${word}" não foi encontrada no Wiktionary.`;
             }
-        } catch (error) {
-            console.error(`Erro ao consultar o Wiktionary (${lang}):`, error);
+        } else {
+            document.getElementById("validationResult").innerHTML =
+                `Erro ao consultar o Wiktionary: ${response.statusText}`;
         }
-    }
-
-    // Exibir resultados
-    if (results.length > 0) {
-        const uniqueResults = [...new Set(results)]; // Remover duplicados
-        const languageList = uniqueResults
-            .map(langCode => `<li>${languageVariants[langCode][1]};</li>`) // Exibir nome da língua em português
-            .join("");
+    } catch (error) {
         document.getElementById("validationResult").innerHTML =
-            `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
-    } else {
-        document.getElementById("validationResult").innerHTML =
-            `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
+            `Erro ao consultar o Wiktionary: ${error.message}`;
     }
 }
 
 
-
-// Função para calcular pontuação da palavra
 const scores = {
     A: 1, B: 3, C: 3, Ç: 5, D: 2, E: 1, F: 4, G: 2,
     H: 4, I: 1, J: 8, K: 10, L: 1, M: 3, N: 1,
