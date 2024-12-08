@@ -31,13 +31,12 @@ function matchLanguage(langName) {
     return null;
 }
 async function checkWordLanguages(word) {
-    const normalizedWord = word.toLowerCase().trim(); // Normalizar a palavra
+    const normalizedWord = word.normalize("NFC"); // Normalizar para NFC
+    const encodedWord = encodeURIComponent(normalizedWord); // Codificar para URL
     const results = [];
 
     for (const [lang, domain] of Object.entries(wiktionaryDomains)) {
-        const url = `https://${domain}/w/api.php?action=query&titles=${encodeURIComponent(
-            normalizedWord
-        )}&prop=extracts&explaintext=true&format=json&origin=*`;
+        const url = `https://${domain}/w/api.php?action=query&titles=${encodedWord}&prop=extracts&explaintext=true&format=json&origin=*`;
 
         try {
             const response = await fetch(url);
@@ -52,6 +51,8 @@ async function checkWordLanguages(word) {
                     const languages = languageMatches.map(match =>
                         match.replace(/^==\s*|\s*==$/g, "").trim()
                     );
+
+                    // Verifica quais línguas são românicas
                     const romanLanguages = languages
                         .map(matchLanguage)
                         .filter(langCode => langCode !== null);
@@ -66,7 +67,7 @@ async function checkWordLanguages(word) {
 
     // Exibir resultados
     if (results.length > 0) {
-        const uniqueResults = [...new Set(results)]; // Remove duplicados
+        const uniqueResults = [...new Set(results)];
         const languageList = uniqueResults
             .map(langCode => `<li>${languageVariants[langCode][1]};</li>`)
             .join("");
@@ -77,6 +78,7 @@ async function checkWordLanguages(word) {
             `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
     }
 }
+
 
 // Função para calcular pontuação da palavra
 const scores = {
