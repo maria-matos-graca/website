@@ -127,15 +127,27 @@ function displayScore(word) {
 </head>
 
 <body>
-    <h1>Scrabble Românico</h1>
-    <p>Insira uma palavra para verificar as línguas românicas em que ela existe.</p>
-    <form onsubmit="return false;">
+
+ <form onsubmit="return false;">
         <input type="text" id="word" placeholder="Digite uma palavra">
         <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
-            Verificar Línguas
+            Identificar Línguas Românicas
+        </button>
+        <button type="button" onclick="displayScore(document.getElementById('word').value)">
+            Calcular Pontuação
         </button>
     </form>
-    <div id="validationResult"></div>
+
+    <div>
+        <h3>Resultado da Validação:</h3>
+        <div id="validationResult"></div>
+    </div>
+
+    <div>
+        <h3>Pontuação da Palavra:</h3>
+        <div id="scoreResult"></div>
+    </div>
+
 </body>
 </html>
 
