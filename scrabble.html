@@ -6,66 +6,103 @@
     <title>Scrabble Românico</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-
-const romanLanguages = [
-    "Portugais",
-    "Espagnol",
-    "Français",
-    "Italien",
-    "Roumain",
-    "Catalan",
-    "Occitan",
-    "Galicien",
-    "Sarde",
-    "Ladin",
-    "Frioulan",
-    "Réto-roman",
-    "Asturien",
-    "Aragonais",
-    "Napolitain",
-    "Sicilien",
-    "Corse",
-    "Mirandais"
-];
-const languageMapping = {
-    "Portugais": "Português",
-    "Espagnol": "Espanhol",
-    "Français": "Francês",
-    "Italien": "Italiano",
-    "Roumain": "Romeno",
-    "Catalan": "Catalão",
-    "Occitan": "Occitano",
-    "Galicien": "Galego",
-    "Sarde": "Sardo",
-    "Ladin": "Ladino",
-    "Frioulan": "Friulano",
-    "Réto-roman": "Reto-romano",
-    "Asturien": "Asturiano",
-    "Aragonais": "Aragonês",
-    "Napolitain": "Napolitano",
-    "Sicilien": "Siciliano",
-    "Corse": "Córsico",
-    "Mirandais": "Mirandês"
+// Subdomínios do Wiktionary para cada língua
+const wiktionaryDomains = {
+    pt: "pt.wiktionary.org", // Português
+    it: "it.wiktionary.org", // Italiano
+    fr: "fr.wiktionary.org", // Francês
+    es: "es.wiktionary.org", // Espanhol
+    ro: "ro.wiktionary.org"  // Romeno
 };
 
+// Mapeamento de nomes das línguas em várias representações
+const languageVariants = {
+    "pt": ["Portugais", "Português", "Portuguese", "Portoghese", "Portugheză"],
+    "it": ["Italien", "Italiano", "Italian", "Italienisch", "Italiană"],
+    "fr": ["Français", "Francês", "French", "Francese", "Franceză"],
+    "es": ["Espagnol", "Espanhol", "Spanish", "Spagnolo", "Spaniolă"],
+    "ro": ["Roumain", "Romeno", "Romanian", "Rumeno", "Română"]
+};
+
+// Função para identificar o código da língua com base no nome retornado
+function matchLanguage(langName) {
+    for (const [langCode, variants] of Object.entries(languageVariants)) {
+        if (variants.some(variant => variant.toLowerCase() === langName.toLowerCase())) {
+            return langCode; // Retorna o código da língua correspondente
+        }
+    }
+    return null; // Retorna null se nenhuma correspondência for encontrada
+}
+
+// Função para verificar a palavra em múltiplos Wikcionários
+async function checkWordLanguages(word) {
+    const normalizedWord = word.toLowerCase().trim(); // Normalizar a palavra
+    const results = [];
+
+    for (const [lang, domain] of Object.entries(wiktionaryDomains)) {
+        const url = `https://${domain}/w/api.php?action=query&titles=${encodeURIComponent(
+            normalizedWord
+        )}&prop=extracts&explaintext=true&format=json&origin=*`;
+
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                const data = await response.json();
+                const pages = data.query.pages;
+                const page = Object.values(pages)[0];
+
+                if (page && !page.missing) {
+                    const extract = page.extract || "";
+                    const languageMatches = extract.match(/^==\s*([^\=]+)\s*==$/gm) || [];
+                    const languages = languageMatches.map(match =>
+                        match.replace(/^==\s*|\s*==$/g, "").trim()
+                    );
+
+                    // Verifica quais línguas são românicas
+                    const romanLanguages = languages
+                        .map(matchLanguage)
+                        .filter(langCode => langCode !== null);
+
+                    results.push(...romanLanguages);
+                }
+            }
+        } catch (error) {
+            console.error(`Erro ao consultar o Wiktionary (${lang}):`, error);
+        }
+    }
+
+    // Exibir resultados
+    if (results.length > 0) {
+        const uniqueResults = [...new Set(results)]; // Remove duplicados
+        const languageList = uniqueResults
+            .map(langCode => `<li>${languageVariants[langCode][1]};</li>`)
+            .join("");
+        document.getElementById("validationResult").innerHTML =
+            `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
+    } else {
+        document.getElementById("validationResult").innerHTML =
+            `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
+    }
+}
+
+// Função para calcular pontuação da palavra
 const scores = {
     A: 1, B: 3, C: 3, Ç: 5, D: 2, E: 1, F: 4, G: 2,
-    H: 4, I: 1, J: 8, K: 10, L: 1, M: 3, N: 1, Ñ: 8,
-    O: 1, P: 3, Q: 10, R: 1, S: 1, T: 1, U: 1, V: 4,
-    W: 10, X: 8, Y: 10, Z: 10
+    H: 4, I: 1, J: 8, K: 10, L: 1, M: 3, N: 1,
+    O: 1, P: 3, Q: 10, R: 1, S: 1, T: 1, U: 1,
+    V: 4, W: 10, X: 8, Y: 10, Z: 10
 };
 
 function calculateScore(word) {
-    const normalizedWord = word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedWord = word.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     let score = 0;
 
     for (const letter of normalizedWord) {
-        score += scores[letter.toUpperCase()] || 0;
+        score += scores[letter] || 0;
     }
 
     return score;
 }
-
 
 function displayScore(word) {
     if (!word.trim()) {
@@ -78,82 +115,30 @@ function displayScore(word) {
         `A pontuação da palavra "${word}" é: ${score}.`;
 }
 
-async function checkWordLanguages(word) {
-    const normalizedWord = word.toLowerCase(); // Normalizar a palavra
-    const url = `https://fr.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(
-        normalizedWord
-    )}&prop=extracts&explaintext=true&format=json&origin=*`;
-
-    try {
-        const response = await fetch(url);
-        if (response.ok) {
-            const data = await response.json();
-            const pages = data.query.pages;
-            const page = Object.values(pages)[0];
-
-            if (!page || page.missing) {
-                document.getElementById("validationResult").innerHTML =
-                    `A palavra "${word}" não foi encontrada no Wiktionnaire.`;
-                return;
-            }
-
-            // Buscar todas as línguas no texto usando regex mais permissiva
-            const extract = page.extract || "";
-            const languageMatches = extract.match(/^==\s*([A-Za-zÀ-ÿ\s\-]+)\s*==$/gm) || [];
-            const languages = languageMatches.map(match =>
-                match.replace(/^==\s*|\s*==$/g, "").trim()
-            );
-
-            // Filtrar as línguas românicas
-            const romanLanguagesPresent = languages.filter(lang =>
-                Object.keys(languageMapping).includes(lang)
-            );
-
-            if (romanLanguagesPresent.length > 0) {
-                const translatedLanguages = romanLanguagesPresent.map(lang => languageMapping[lang]);
-                const languageList = translatedLanguages.map(lang => `<li>${lang};</li>`).join("");
-
-                document.getElementById("validationResult").innerHTML =
-                    `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
-            } else {
-                document.getElementById("validationResult").innerHTML =
-                    `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
-            }
-        } else {
-            document.getElementById("validationResult").innerHTML =
-                `Erro ao consultar o Wiktionnaire: ${response.statusText}`;
-        }
-    } catch (error) {
-        document.getElementById("validationResult").innerHTML =
-            `Erro ao consultar o Wiktionnaire: ${error.message}`;
-    }
-}
-
     </script>
 </head>
 <body>
     <h1>Scrabble Românico</h1>
 
-<form onsubmit="return false;">
-    <label for="word">Digite uma palavra:</label>
-    <input type="text" id="word" name="letters">
-    <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
-        Identificar Línguas Românicas
-    </button>
-    <button type="button" onclick="displayScore(document.getElementById('word').value)">
-        Calcular Pontuação
-    </button>
-</form>
+ <form onsubmit="return false;">
+        <input type="text" id="word" placeholder="Digite uma palavra">
+        <button type="button" onclick="checkWordLanguages(document.getElementById('word').value)">
+            Identificar Línguas Românicas
+        </button>
+        <button type="button" onclick="displayScore(document.getElementById('word').value)">
+            Calcular Pontuação
+        </button>
+    </form>
 
-<div>
-    <h3>Resultado da Validação:</h3>
-    <div id="validationResult"></div>
-</div>
+    <div>
+        <h3>Resultado da Validação:</h3>
+        <div id="validationResult"></div>
+    </div>
 
-<div>
-    <h3>Pontuação da Palavra:</h3>
-    <div id="scoreResult"></div>
-</div>
+    <div>
+        <h3>Pontuação da Palavra:</h3>
+        <div id="scoreResult"></div>
+    </div>
 
     </div>
 </body>
