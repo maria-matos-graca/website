@@ -16,26 +16,28 @@ function matchLanguage(langName) {
     return null;
 }
 
-const romanLanguages = [
-    "Portuguese",
-    "Spanish",
-    "French",
-    "Italian",
-    "Romanian",
-    "Catalan",
-    "Occitan",
-    "Galician",
-    "Sardinian",
-    "Ladin",
-    "Friulian",
-    "Rhaeto-Romance",
-    "Asturian",
-    "Aragonese",
-    "Neapolitan",
-    "Sicilian",
-    "Corsican",
-    "Mirandese"
-];
+
+const romanLanguagesMapping = {
+    "Portuguese": "Português",
+    "Spanish": "Espanhol",
+    "French": "Francês",
+    "Italian": "Italiano",
+    "Romanian": "Romeno",
+    "Catalan": "Catalão",
+    "Occitan": "Occitano",
+    "Galician": "Galego",
+    "Sardinian": "Sardo",
+    "Ladin": "Ladino",
+    "Friulian": "Friulano",
+    "Rhaeto-Romance": "Reto-romano",
+    "Asturian": "Asturiano",
+    "Aragonese": "Aragonês",
+    "Neapolitan": "Napolitano",
+    "Sicilian": "Siciliano",
+    "Corsican": "Córsico",
+    "Mirandese": "Mirandês"
+};
+
 
 async function checkWordLanguages(word) {
     const normalizedWord = word.normalize("NFC"); // Normalizar para NFC
@@ -58,13 +60,13 @@ async function checkWordLanguages(word) {
 
                 // Filtrar apenas línguas românicas
                 const romanLanguagesPresent = languages.filter(lang =>
-                    romanLanguages.includes(lang)
+                    romanLanguagesMapping.hasOwnProperty(lang)
                 );
 
                 // Exibir resultado
                 if (romanLanguagesPresent.length > 0) {
                     const languageList = romanLanguagesPresent
-                        .map(lang => `<li>${lang};</li>`)
+                        .map(lang => `<li>${romanLanguagesMapping[lang]};</li>`)
                         .join("");
                     document.getElementById("validationResult").innerHTML =
                         `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
