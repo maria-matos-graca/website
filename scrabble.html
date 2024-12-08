@@ -46,18 +46,8 @@ async function checkWordLanguages(word) {
                 const page = Object.values(pages)[0];
 
                 if (page && !page.missing) {
-                    const extract = page.extract || "";
-                    const languageMatches = extract.match(/^==\s*([^\=]+)\s*==$/gm) || [];
-                    const languages = languageMatches.map(match =>
-                        match.replace(/^==\s*|\s*==$/g, "").trim()
-                    );
-
-                    // Verifica quais línguas são românicas
-                    const romanLanguages = languages
-                        .map(matchLanguage)
-                        .filter(langCode => langCode !== null);
-
-                    results.push(...romanLanguages);
+                    const extract = page.extract || "Sem definição disponível.";
+                    results.push({ lang, extract });
                 }
             }
         } catch (error) {
@@ -67,12 +57,15 @@ async function checkWordLanguages(word) {
 
     // Exibir resultados
     if (results.length > 0) {
-        const uniqueResults = [...new Set(results)];
-        const languageList = uniqueResults
-            .map(langCode => `<li>${languageVariants[langCode][1]};</li>`)
+        const resultsHtml = results
+            .map(result => `
+                <div>
+                    <h4>${languageVariants[result.lang][1]}:</h4>
+                    <p>${result.extract}</p>
+                </div>
+            `)
             .join("");
-        document.getElementById("validationResult").innerHTML =
-            `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
+        document.getElementById("validationResult").innerHTML = resultsHtml;
     } else {
         document.getElementById("validationResult").innerHTML =
             `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
