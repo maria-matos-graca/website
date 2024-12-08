@@ -46,8 +46,7 @@ async function checkWordLanguages(word) {
                 const page = Object.values(pages)[0];
 
                 if (page && !page.missing) {
-                    const extract = page.extract || "Sem definição disponível.";
-                    results.push({ lang, extract });
+                    results.push(lang); // Adicionar o código da língua à lista de resultados
                 }
             }
         } catch (error) {
@@ -57,20 +56,18 @@ async function checkWordLanguages(word) {
 
     // Exibir resultados
     if (results.length > 0) {
-        const resultsHtml = results
-            .map(result => `
-                <div>
-                    <h4>${languageVariants[result.lang][1]}:</h4>
-                    <p>${result.extract}</p>
-                </div>
-            `)
+        const uniqueResults = [...new Set(results)]; // Remover duplicados
+        const languageList = uniqueResults
+            .map(langCode => `<li>${languageVariants[langCode][1]};</li>`) // Exibir nome da língua em português
             .join("");
-        document.getElementById("validationResult").innerHTML = resultsHtml;
+        document.getElementById("validationResult").innerHTML =
+            `A palavra "${word}" foi encontrada nas seguintes línguas românicas:<ul>${languageList}</ul>`;
     } else {
         document.getElementById("validationResult").innerHTML =
             `A palavra "${word}" não foi encontrada em nenhuma língua românica.`;
     }
 }
+
 
 
 // Função para calcular pontuação da palavra
