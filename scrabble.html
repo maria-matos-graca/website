@@ -109,6 +109,34 @@ function displayScore(word) {
     document.getElementById("scoreResult").textContent =
         `A pontuação da palavra "${word}" é: ${score}.`;
 }
+async function testPortugueseWiktionary(word) {
+    const normalizedWord = word.normalize("NFC"); // Normalizar para NFC
+    const encodedWord = encodeURIComponent(normalizedWord); // Codificar para URL
+    const url = `https://pt.wiktionary.org/w/api.php?action=query&titles=${encodedWord}&prop=extracts&explaintext=true&format=json&origin=*`;
+
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            const pages = data.query.pages;
+            const page = Object.values(pages)[0];
+
+            if (page && !page.missing) {
+                console.log(`A palavra "${word}" foi encontrada no Wiktionary em português.`);
+                console.log(data);
+            } else {
+                console.error(`A palavra "${word}" não foi encontrada no Wiktionary em português.`);
+            }
+        } else {
+            console.error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error(`Erro ao consultar o Wiktionary em português:`, error);
+    }
+}
+
+// Teste
+testPortugueseWiktionary("mania");
 
     </script>
 </head>
