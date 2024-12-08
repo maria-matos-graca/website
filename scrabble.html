@@ -6,16 +6,14 @@
     <title>Scrabble Românico</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-// Subdomínios do Wiktionary para cada língua
-const wiktionaryDomains = {
-    pt: "pt.wiktionary.org", // Português
-    it: "it.wiktionary.org", // Italiano
-    fr: "fr.wiktionary.org", // Francês
-    es: "es.wiktionary.org", // Espanhol
-    ro: "ro.wiktionary.org"  // Romeno
-};
 
-// Mapeamento de nomes das línguas em várias representações
+const wiktionaryDomains = {
+    pt: "pt.wiktionary.org",
+    it: "it.wiktionary.org",
+    fr: "fr.wiktionary.org",
+    es: "es.wiktionary.org",
+    ro: "ro.wiktionary.org"
+};
 const languageVariants = {
     "pt": ["Portugais", "Português", "Portuguese", "Portoghese", "Portugheză"],
     "it": ["Italien", "Italiano", "Italian", "Italienisch", "Italiană"],
@@ -24,17 +22,14 @@ const languageVariants = {
     "ro": ["Roumain", "Romeno", "Romanian", "Rumeno", "Română"]
 };
 
-// Função para identificar o código da língua com base no nome retornado
 function matchLanguage(langName) {
     for (const [langCode, variants] of Object.entries(languageVariants)) {
         if (variants.some(variant => variant.toLowerCase() === langName.toLowerCase())) {
-            return langCode; // Retorna o código da língua correspondente
+            return langCode;
         }
     }
-    return null; // Retorna null se nenhuma correspondência for encontrada
+    return null;
 }
-
-// Função para verificar a palavra em múltiplos Wikcionários
 async function checkWordLanguages(word) {
     const normalizedWord = word.toLowerCase().trim(); // Normalizar a palavra
     const results = [];
@@ -57,8 +52,6 @@ async function checkWordLanguages(word) {
                     const languages = languageMatches.map(match =>
                         match.replace(/^==\s*|\s*==$/g, "").trim()
                     );
-
-                    // Verifica quais línguas são românicas
                     const romanLanguages = languages
                         .map(matchLanguage)
                         .filter(langCode => langCode !== null);
