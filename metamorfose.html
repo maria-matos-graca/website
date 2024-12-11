@@ -8,7 +8,7 @@
         body,html {
             margin: 0;
             overflow: hidden;
-            cursor: none; /* Esconde o cursor padrão */
+            cursor: none;
         }
 
         #fly {
@@ -17,7 +17,7 @@
             height: 60px;
             background: url('mosca2.png') no-repeat center center;
             background-size: cover;
-            transform-origin: center center; /* Define o ponto de rotação */
+            transform-origin: center center;
         }
     </style>
 </head>
@@ -26,33 +26,22 @@
 
     <script>
         const fly = document.getElementById("fly");
-        let fixedAngle = -90; // Inclinação fixa do PNG (45º anti-horário)
-
-        // Guardar a posição anterior do rato para calcular o movimento
+        let fixedAngle = -90;
         let prevX = null;
         let prevY = null;
 
        document.addEventListener("mousemove", (event) => {
     const currentX = event.clientX;
     const currentY = event.clientY;
-
-    // Atualiza a posição da mosca para centralizar no cursor
     fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
     fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
-
-    // Atualiza a rotação baseada no movimento
-    const deltaX = currentX - (prevX || currentX); // Diferença desde o movimento anterior
+    const deltaX = currentX - (prevX || currentX);
     const deltaY = currentY - (prevY || currentY);
-    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI); // Calcula o ângulo
-    fly.style.transform = `rotate(${angle + fixedAngle}deg)`; // Ajusta com inclinação fixa
-
-    // Atualiza as posições anteriores
+    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
     prevX = currentX;
     prevY = currentY;
 });
-
-
-            // Atualiza as posições anteriores
             prevX = currentX;
             prevY = currentY;
         });
