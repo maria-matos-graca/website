@@ -3,61 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mouches - Sartre</title>
+    <title>Les Mouches</title>
     <style>
-        body,html {
-            height: 100%;
+        body {
             margin: 0;
             overflow: hidden;
-            cursor: none;
+            cursor: none; /* Esconde o cursor padrão */
         }
 
-   iframe {
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
-            cursor: none;
-            z-index: 1; 
+            z-index: 1; /* Coloca o iframe abaixo do overlay */
             position: relative;
+        }
 
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998; /* Fica logo abaixo do cursor */
+            pointer-events: none; /* Permite interagir com o iframe */
+        }
 
         #fly {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: url('mosca2.png') no-repeat center center;
             background-size: cover;
-            pointer-events: none;
+            pointer-events: none; /* Permite interação com o iframe */
             transform-origin: center center;
-            z-index: 9999;
+            z-index: 9999; /* Cursor no topo */
         }
     </style>
 </head>
 <body>
-<embed src="moscas.pdf" type="application/pdf" width="100%" height="100%" style="cursor: none; z-index: 1; position: relative;">
+    <!-- Iframe para carregar o PDF -->
+    <iframe src="moscas.pdf"></iframe>
+
+    <!-- Div transparente sobre o iframe -->
+    <div id="overlay"></div>
+
+    <!-- Div do cursor personalizado -->
     <div id="fly"></div>
 
     <script>
         const fly = document.getElementById("fly");
         let prevX = null;
         let prevY = null;
-        let fixedAngle = -90;
+        let fixedAngle = -90; // Ajusta a inclinação do cursor
 
+        // Adiciona o evento para seguir o movimento do rato
         document.addEventListener("mousemove", (event) => {
             const currentX = event.clientX;
             const currentY = event.clientY;
 
+            // Atualiza a posição do cursor personalizado
             fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
             fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
+
+            // Calcula a rotação baseada no movimento
             const deltaX = currentX - (prevX || currentX);
             const deltaY = currentY - (prevY || currentY);
             const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
             fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
 
+            // Atualiza as posições anteriores
             prevX = currentX;
             prevY = currentY;
         });
     </script>
 </body>
 </html>
-
