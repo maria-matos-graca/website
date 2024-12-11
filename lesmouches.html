@@ -114,7 +114,6 @@
             renderPage(currentPage);
         });
 
-        // Botão: Próxima Página
         nextPageButton.addEventListener('click', () => {
             if (currentPage >= totalPages) return;
             currentPage++;
@@ -146,7 +145,7 @@
             // Define a transição de acordo com a distância
             fly.style.transition = `left ${duration}s linear, top ${duration}s linear, transform 0.2s linear`;
 
-            // Calcula o ângulo para girar a mosca na direção do movimento
+            // Calcula o ângulo para girar a mosca na direcção do movimento
             const angle = Math.atan2(y - currentY, x - currentX) * (180 / Math.PI);
             fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
 
@@ -154,16 +153,15 @@
             fly.style.left = `${x - fly.offsetWidth / 2}px`;
             fly.style.top = `${y - fly.offsetHeight / 2}px`;
 
-            // Reseta o estado ao final da transição
+            // Reset
             setTimeout(() => (isMoving = false), duration * 1000);
         }
 
-        // Movimento contínuo com o rato (desktop)
         document.addEventListener("mousemove", (event) => {
             moveFlyTo(event.clientX, event.clientY);
         });
 
-        // Adiciona eventos de toque (móvel) e clique (desktop)
+        // eventos de toque (móvel) e clique (desktop)
         document.addEventListener("touchstart", (event) => {
             const touch = event.touches[0];
             moveFlyTo(touch.clientX, touch.clientY);
