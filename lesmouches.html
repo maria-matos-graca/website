@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Mouches</title>
     <style>
-        html,body {
+        html,body, iframe {
+            border: none;
             margin: 0;
             overflow: hidden;
             cursor: none; /* Esconde o cursor padrão */
+            z-index: 1; /* Coloca o iframe abaixo do overlay */
         }
 
         iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            z-index: 1; /* Coloca o iframe abaixo do overlay */
+
+
             position: relative;
         }
 
@@ -42,13 +42,8 @@
     </style>
 </head>
 <body>
-    <!-- Iframe para carregar o PDF -->
     <iframe src="moscas.pdf"></iframe>
-
-    <!-- Div transparente sobre o iframe -->
     <div id="overlay"></div>
-
-    <!-- Div do cursor personalizado -->
     <div id="fly"></div>
 
     <script>
