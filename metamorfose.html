@@ -32,31 +32,25 @@
         let prevX = null;
         let prevY = null;
 
-        document.addEventListener("mousemove", (event) => {
-            const currentX = event.clientX;
-            const currentY = event.clientY;
+       document.addEventListener("mousemove", (event) => {
+    const currentX = event.clientX;
+    const currentY = event.clientY;
 
-            // Inicializa a posição anterior no primeiro movimento
-            if (prevX === null || prevY === null) {
-                prevX = currentX;
-                prevY = currentY;
-            }
+    // Atualiza a posição da mosca para centralizar no cursor
+    fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
+    fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
 
-            // Calcula o deslocamento (delta) nas direções X e Y
-            const deltaX = currentX - prevX;
-            const deltaY = currentY - prevY;
+    // Atualiza a rotação baseada no movimento
+    const deltaX = currentX - (prevX || currentX); // Diferença desde o movimento anterior
+    const deltaY = currentY - (prevY || currentY);
+    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI); // Calcula o ângulo
+    fly.style.transform = `rotate(${angle + fixedAngle}deg)`; // Ajusta com inclinação fixa
 
-            // Atualiza a posição da mosca para seguir o rato (com precisão diagonal)
-            const currentLeft = parseFloat(fly.style.left || 0);
-            const currentTop = parseFloat(fly.style.top || 0);
-            fly.style.left = `${currentLeft + deltaX}px`;
-            fly.style.top = `${currentTop + deltaY}px`;
+    // Atualiza as posições anteriores
+    prevX = currentX;
+    prevY = currentY;
+});
 
-            // Calcula o ângulo de rotação com base no movimento
-            if (deltaX !== 0 || deltaY !== 0) {
-                const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI); // Ângulo em graus
-                fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
-            }
 
             // Atualiza as posições anteriores
             prevX = currentX;
