@@ -44,13 +44,15 @@
 
         #fly {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: url('mosca2.png') no-repeat center center;
             background-size: cover;
             pointer-events: none;
             transform-origin: center center;
             z-index: 9999;
+            transition: transform 0.2s linear, left 0s, top 0s;
+          
         }
     </style>
 </head>
@@ -119,26 +121,61 @@
             renderPage(currentPage);
         });
 
-        const fly = document.getElementById("fly");
-        let prevX = null;
-        let prevY = null;
-        let fixedAngle = -90;
+           const fly = document.getElementById("fly");
+        let fixedAngle = -45; // Inclinação da mosca
+        const speed = 200; // Velocidade da mosca em pixels por segundo
+        let isMoving = false; // Estado para evitar animações simultâneas
 
-        document.addEventListener("mousemove", (event) => {
-            const currentX = event.clientX;
-            const currentY = event.clientY;
+        // Calcula a distância entre dois pontos
+        function calculateDistance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
 
-            fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
-            fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
+        // Move a mosca até as coordenadas (x, y)
+        function moveFlyTo(x, y) {
+            if (isMoving) return; // Evita sobreposição de animações
+            isMoving = true;
 
-            const deltaX = currentX - (prevX || currentX);
-            const deltaY = currentY - (prevY || currentY);
-            const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+            const currentX = parseFloat(fly.style.left || 0) + fly.offsetWidth / 2;
+            const currentY = parseFloat(fly.style.top || 0) + fly.offsetHeight / 2;
+
+            // Calcula a distância e o tempo da transição
+            const distance = calculateDistance(currentX, currentY, x, y);
+            const duration = distance / speed;
+
+            // Define a transição de acordo com a distância
+            fly.style.transition = `left ${duration}s linear, top ${duration}s linear, transform 0.2s linear`;
+
+            // Calcula o ângulo para girar a mosca na direção do movimento
+            const angle = Math.atan2(y - currentY, x - currentX) * (180 / Math.PI);
             fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
 
-            prevX = currentX;
-            prevY = currentY;
+            // Move a mosca
+            fly.style.left = `${x - fly.offsetWidth / 2}px`;
+            fly.style.top = `${y - fly.offsetHeight / 2}px`;
+
+            // Reseta o estado ao final da transição
+            setTimeout(() => (isMoving = false), duration * 1000);
+        }
+
+        // Movimento contínuo com o rato (desktop)
+        document.addEventListener("mousemove", (event) => {
+            moveFlyTo(event.clientX, event.clientY);
         });
+
+        // Adiciona eventos de toque (móvel) e clique (desktop)
+        document.addEventListener("touchstart", (event) => {
+            const touch = event.touches[0];
+            moveFlyTo(touch.clientX, touch.clientY);
+        });
+
+        document.addEventListener("click", (event) => {
+            moveFlyTo(event.clientX, event.clientY);
+        });
+
+        // Posição inicial da mosca
+        fly.style.left = "50px";
+        fly.style.top = "50px";
     </script>
 </body>
 </html>
