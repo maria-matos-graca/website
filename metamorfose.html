@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mosca com Rotação Estável</title>
+    <title>Metamorfose</title>
     <style>
         body {
             margin: 0;
@@ -26,22 +26,25 @@
 
     <script>
         const fly = document.getElementById("fly");
-         let fixedAngle = 0; 
+        let fixedAngle = -45; // Inclina 45º no sentido anti-horário
         let prevX = null;
         let prevY = null;
 
         document.addEventListener("mousemove", (event) => {
             const currentX = event.clientX;
             const currentY = event.clientY;
+
+            // Se for o primeiro movimento, inicializa a posição anterior
             if (prevX === null || prevY === null) {
                 prevX = currentX;
                 prevY = currentY;
             }
-
             const deltaX = currentX - prevX;
             const deltaY = currentY - prevY;
+
+            // Evita divisão por zero em movimento mínimo
             if (deltaX !== 0 || deltaY !== 0) {
-                const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+                const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI); // Ângulo em graus
                 fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
             }
 
