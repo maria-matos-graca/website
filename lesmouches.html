@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Mouches</title>
     <style>
-        body,html {
+        body {
             margin: 0;
             overflow: hidden;
             cursor: none;
@@ -13,7 +13,7 @@
 
         #pdf-container {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 50px);
             overflow: auto;
             background: #f0f0f0;
             position: relative;
@@ -24,56 +24,113 @@
             margin: auto;
         }
 
+        #controls {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ddd;
+            border-bottom: 1px solid #ccc;
+            position: relative;
+            z-index: 1000;
+        }
+
+        button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
         #fly {
             position: absolute;
             width: 50px;
             height: 50px;
             background: url('mosca.png') no-repeat center center;
             background-size: cover;
-            pointer-events: none
+            pointer-events: none;
             transform-origin: center center;
             z-index: 9999;
         }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <button id="prev-page"> << </button>
+        <span id="page-info"> Mouche <span id="current-page">1</span> de <span id="total-pages">1</span></span>
+        <button id="next-page">>></button>
+    </div>
+
     <div id="pdf-container">
         <canvas id="pdf-canvas"></canvas>
     </div>
-
     <div id="fly"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
     <script>
         const url = 'moscas.pdf';
 
-        const pdfContainer = document.getElementById('pdf-container');
         const canvas = document.getElementById('pdf-canvas');
         const ctx = canvas.getContext('2d');
 
-        pdfjsLib.getDocument(url).promise.then(pdf => {
-            pdf.getPage(1).then(page => {
-                const viewport = page.getViewport({ scale: 1.5 });
+        const prevPageButton = document.getElementById('prev-page');
+        const nextPageButton = document.getElementById('next-page');
+        const currentPageElement = document.getElementById('current-page');
+        const totalPagesElement = document.getElementById('total-pages');
+
+        let pdfDoc = null;
+        let currentPage = 1;
+        let totalPages = 0;
+
+        const scale = 1.5;
+        function renderPage(pageNumber) {
+            pdfDoc.getPage(pageNumber).then((page) => {
+                const viewport = page.getViewport({ scale });
                 canvas.width = viewport.width;
                 canvas.height = viewport.height;
 
                 page.render({
                     canvasContext: ctx,
-                    viewport: viewport
+                    viewport: viewport,
                 });
             });
+            currentPageElement.textContent = pageNumber;
+        }
+
+        pdfjsLib.getDocument(url).promise.then((pdf) => {
+            pdfDoc = pdf;
+            totalPages = pdf.numPages;
+
+            totalPagesElement.textContent = totalPages;
+
+            renderPage(currentPage);
+        });
+
+        prevPageButton.addEventListener('click', () => {
+            if (currentPage <= 1) return;
+            currentPage--;
+            renderPage(currentPage);
+        });
+
+        // Botão: Próxima Página
+        nextPageButton.addEventListener('click', () => {
+            if (currentPage >= totalPages) return;
+            currentPage++;
+            renderPage(currentPage);
         });
 
         const fly = document.getElementById("fly");
         let prevX = null;
         let prevY = null;
         let fixedAngle = -90;
+
         document.addEventListener("mousemove", (event) => {
             const currentX = event.clientX;
             const currentY = event.clientY;
 
             fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
             fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
+
             const deltaX = currentX - (prevX || currentX);
             const deltaY = currentY - (prevY || currentY);
             const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
