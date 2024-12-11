@@ -8,16 +8,16 @@
         body {
             margin: 0;
             overflow: hidden;
-            cursor: none;
+            cursor: none; /* Esconde o cursor padrão */
         }
 
         #fly {
             position: absolute;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: url('mosca2.png') no-repeat center center;
             background-size: cover;
-            transform-origin: center center;
+            transform-origin: center center; /* Define o ponto de rotação */
         }
     </style>
 </head>
@@ -26,7 +26,9 @@
 
     <script>
         const fly = document.getElementById("fly");
-        let fixedAngle = -90;
+        let fixedAngle = -90; // Inclinação fixa do PNG (45º anti-horário)
+
+        // Guardar a posição anterior do rato para calcular o movimento
         let prevX = null;
         let prevY = null;
 
@@ -34,22 +36,29 @@
             const currentX = event.clientX;
             const currentY = event.clientY;
 
-            // Se for o primeiro movimento, inicializa a posição anterior
+            // Inicializa a posição anterior no primeiro movimento
             if (prevX === null || prevY === null) {
                 prevX = currentX;
                 prevY = currentY;
             }
+
+            // Calcula o deslocamento (delta) nas direções X e Y
             const deltaX = currentX - prevX;
             const deltaY = currentY - prevY;
 
-            // Evita divisão por zero em movimento mínimo
+            // Atualiza a posição da mosca para seguir o rato (com precisão diagonal)
+            const currentLeft = parseFloat(fly.style.left || 0);
+            const currentTop = parseFloat(fly.style.top || 0);
+            fly.style.left = `${currentLeft + deltaX}px`;
+            fly.style.top = `${currentTop + deltaY}px`;
+
+            // Calcula o ângulo de rotação com base no movimento
             if (deltaX !== 0 || deltaY !== 0) {
                 const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI); // Ângulo em graus
                 fly.style.transform = `rotate(${angle + fixedAngle}deg)`;
             }
 
-            fly.style.left = `${currentX - fly.offsetWidth / 2}px`;
-            fly.style.top = `${currentY - fly.offsetHeight / 2}px`;
+            // Atualiza as posições anteriores
             prevX = currentX;
             prevY = currentY;
         });
