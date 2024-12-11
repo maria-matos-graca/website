@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    cursor: none;
+}
+
+#fly {
+    position: absolute;
+    width: 50px; /* Tamanho da mosca */
+    height: 50px;
+    background: url('mosca.png') no-repeat center center;
+    background-size: cover;
+    transform: rotate(0deg);
+    pointer-events: none;
+}
