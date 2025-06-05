@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Página Dummy com Iframe</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    .iframe-container {
+      width: 375px;
+      height: 667px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #mensagens {
+      background-color: #f7f7f7;
+      padding: 10px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      min-height: 50px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Página Dummy com Iframe</h2>
+
+  <div class="iframe-container">
+    <iframe id="chatIframe" src="https://outsystemsdevdmz.corporativo.pt/LPD_WOO_CHAT/TestScreen"></iframe>
+  </div>
+
+  <button onclick="enviarFecho()">Enviar evento de fecho de sessão para o iframe</button>
+
+  <h3>Mensagens recebidas do iframe:</h3>
+  <div id="mensagens"></div>
+
+  <script>
+    const iframe = document.getElementById("chatIframe");
+
+    // Receber
+    window.addEventListener("message", function(event) {
+      const dominioIframe = "https://outsystemsdevdmz.corporativo.pt";
+
+      if (event.origin !== dominioIframe) {
+        console.warn("Mensagem rejeitada de origem não autorizada:", event.origin);
+        return;
+      }
+
+      const mensagem = JSON.stringify(event.data, null, 2);
+      document.getElementById("mensagens").textContent += "Recebido do iframe:\n" + mensagem + "\n\n";
+    });
+//Enviar
+    function enviarFecho() {
+      iframe.contentWindow.postMessage(
+        { action: "close_session" },
+        "https://outsystemsdevdmz.corporativo.pt"
+      );
+    }
+  </script>
+
+</body>
+</html>
