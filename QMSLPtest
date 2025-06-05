@@ -41,7 +41,7 @@
   <h2>Página Dummy com Iframe</h2>
 
   <div class="iframe-container">
-    <iframe id="chatIframe" src="https://appsmobileqms.nos.pt/LPD_WOO_CHAT/TestScreen"></iframe>
+    <iframe id="chatIframe" src="https://qmsoutsystemsext.corporativo.pt/LPD_WOO_CHAT/TestScreen"></iframe>
   </div>
 
   <button onclick="enviarFecho()">Enviar evento de fecho de sessão para o iframe</button>
@@ -54,7 +54,7 @@
 
     // Receber
     window.addEventListener("message", function(event) {
-      const dominioIframe = "https://appsmobileqms.nos.pt/";
+      const dominioIframe = "https://qmsoutsystemsext.corporativo.pt/";
 
       if (event.origin !== dominioIframe) {
         console.warn("Mensagem rejeitada de origem não autorizada:", event.origin);
@@ -68,7 +68,7 @@
     function enviarFecho() {
       iframe.contentWindow.postMessage(
         { action: "close_session" },
-        "https://appsmobileqms.nos.pt/LPD_WOO_CHAT/TestScreen"
+        "https://qmsoutsystemsext.corporativo.pt/LPD_WOO_CHAT/TestScreen"
       );
     }
   </script>
