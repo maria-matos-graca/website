@@ -54,7 +54,7 @@
 
     // Receber
     window.addEventListener("message", function(event) {
-      const dominioIframe = "https://qmsoutsystemsext.corporativo.pt/";
+      const dominioIframe = "https://qmsoutsystemsext.corporativo.pt";
 
       if (event.origin !== dominioIframe) {
         console.warn("Mensagem rejeitada de origem não autorizada:", event.origin);
