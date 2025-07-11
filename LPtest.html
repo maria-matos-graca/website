@@ -41,7 +41,7 @@
   <h2>Página Dummy com Iframe</h2>
 
   <div class="iframe-container">
-    <iframe id="chatIframe" src="https://outsystemsdevdmz.corporativo.pt/LPD_WOO_CHAT/TestScreen"></iframe>
+    <iframe id="chatIframe" src="https://outsystemsdevdmz.corporativo.pt/LPD_WOO_CHAT/AVChat_LP"></iframe>
   </div>
 
   <button onclick="enviarFecho()">Enviar evento de fecho de sessão para o iframe</button>
@@ -68,7 +68,7 @@
     function enviarFecho() {
       iframe.contentWindow.postMessage(
         { action: "close_session" },
-        "https://outsystemsdevdmz.corporativo.pt/LPD_WOO_CHAT/TestScreen"
+        "https://outsystemsdevdmz.corporativo.pt/LPD_WOO_CHAT/AVChat_LP"
       );
     }
   </script>
